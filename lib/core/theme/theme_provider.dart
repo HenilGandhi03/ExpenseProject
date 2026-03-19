@@ -1,30 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// lib/core/providers/theme_provider.dart
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ThemeNotifier extends StateNotifier<bool> {
-  ThemeNotifier() : super(false) {
-    _loadTheme();
-  }
+final themeProvider = AsyncNotifierProvider<ThemeNotifier, bool>(
+  ThemeNotifier.new,
+);
 
-  Future<void> _loadTheme() async {
+class ThemeNotifier extends AsyncNotifier<bool> {
+  @override
+  Future<bool> build() async {
     final prefs = await SharedPreferences.getInstance();
-    state = prefs.getBool('isDarkMode') ?? false;
+    return prefs.getBool('isDarkMode') ?? false;
   }
 
   Future<void> toggleTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    state = !state;
-    await prefs.setBool('isDarkMode', state);
+    final newValue = !(state.value ?? false);
+    state = AsyncData(newValue);
+    await prefs.setBool('isDarkMode', newValue);
   }
 
   Future<void> setTheme(bool isDark) async {
     final prefs = await SharedPreferences.getInstance();
-    state = isDark;
+    state = AsyncData(isDark);
     await prefs.setBool('isDarkMode', isDark);
   }
 }
-
-final themeProvider = StateNotifierProvider<ThemeNotifier, bool>(
-  (ref) => ThemeNotifier(),
-);

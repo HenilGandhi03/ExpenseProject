@@ -1,3 +1,4 @@
+import 'package:expense_project/core/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expense_project/core/services/database_service.dart';
@@ -14,9 +15,9 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // FIXED: Proper theme provider that triggers UI updates
-final themeProvider = StateNotifierProvider<ThemeNotifier, bool>(
-  (ref) => ThemeNotifier(),
-);
+// final themeProvider = StateNotifierProvider<ThemeNotifier, bool>(
+//   (ref) => ThemeNotifier(),
+// );
 
 class ThemeNotifier extends StateNotifier<bool> {
   ThemeNotifier() : super(false) {
@@ -185,22 +186,22 @@ class ModernSettingsPage extends ConsumerWidget {
             _SettingsSection(
               title: 'App Preferences',
               children: [
-                _SettingsTile(
-                  leading: Icon(
-                    isDarkMode ? Icons.dark_mode : Icons.light_mode,
-                    color: theme.colorScheme.primary,
-                  ),
-                  title: 'Dark Mode',
-                  subtitle: isDarkMode
-                      ? 'Dark theme enabled'
-                      : 'Light theme enabled',
-                  trailing: Switch(
-                    value: isDarkMode,
-                    onChanged: (_) {
-                      ref.read(themeProvider.notifier).toggleTheme();
-                    },
-                  ),
-                ),
+                // _SettingsTile(
+                //   leading: Icon(
+                //     isDarkMode ? Icons.dark_mode : Icons.light_mode,
+                //     color: theme.colorScheme.primary,
+                //   ),
+                //   title: 'Dark Mode',
+                //   subtitle: isDarkMode
+                //       ? 'Dark theme enabled'
+                //       : 'Light theme enabled',
+                //   trailing: Switch(
+                //     value: isDarkMode,
+                //     onChanged: (_) {
+                //       ref.read(themeProvider.notifier).toggleTheme();
+                //     },
+                //   ),
+                // ),
                 _SettingsTile(
                   leading: Icon(
                     Icons.monetization_on,
